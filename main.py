@@ -91,7 +91,6 @@ async def on_message(message):
         async with message.channel.typing():
             if message.channel.id != 1185756393169485884:
                 return
-            
             logging.info(f'\n提示詞：{prompt_text}\n請求提出者；{message.author}\n請求頻道：{message.channel}\n請求伺服器：{message.guild}\n類型：純文字')
             prompt_text = prompt_text.lstrip()
 
@@ -102,7 +101,7 @@ async def on_message(message):
             response_text = response_dict.get('answer')
 
             if response_text is None:
-                response_text = '> 人家不懂啦！！再講一次嘛，好嗎好嗎？'
+                response_text = '人家不懂啦！！再講一次嘛，好嗎好嗎？'
 
             # 回覆對方
             await message.reply(response_text)

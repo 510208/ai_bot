@@ -41,6 +41,24 @@ def prompt_chat(prompt_text):
                 "role": "user",
                 "parts": [{"text": prompt_text}]
             }
+        ],
+        "safetySettings": [
+            {
+                "category": "HARM_CATEGORY_HARASSMENT",
+                "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+            },
+            {
+                "category": "HARM_CATEGORY_HATE_SPEECH",
+                "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+            },
+            {
+                "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+                "threshold": "BLOCK_NONE"
+            },
+            {
+                "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+                "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+            }
         ]
     }
 
@@ -60,7 +78,10 @@ def prompt_chat(prompt_text):
         candidates = response_data.get('candidates', [])
 
         # 提取 candidates 中的 content，假設 content 是一個字串
-        content = candidates[0].get('content', {}).get('parts', [])[0].get('text', '')
+        if candidates and 'content' in candidates[0] and 'parts' in candidates[0]['content'] and candidates[0]['content']['parts']:
+            content = candidates[0]['content']['parts'][0].get('text', '')
+        else:
+            content = ''
 
         # 將回應加入歷史對話
 
@@ -85,12 +106,20 @@ def prompt_chat(prompt_text):
         logging.info("History結果\n" + json.dumps(data, indent=4, ensure_ascii=False))
         
         print(content)
-        # 回傳的字典，包含狀態碼、完整回應和答案
-        return {
-            "status_code": response.status_code,
-            "response": response_data,
-            "answer": content
-        }
+
+        if content:
+            return {
+                "status_code": response.status_code,
+                "response": response_data,
+                "answer": content
+            }
+        else:
+            finish_reason = response_data.get('candidates', [{}])[0].get('finishReason', '')
+            return {
+                "status_code": response.status_code,
+                "response": response_data,
+                "answer": f"抱歉喔，我沒辦法告訴你這件事，Google因為這個原因：{finish_reason}，不讓我告訴你..."
+            }
     else:
         return {
             "status_code": response.status_code,
@@ -109,7 +138,7 @@ def reset_history():
                 "role": "user",
                 "parts": [
                     {
-                        "text": "你現在是一位Minecraft伺服器的管理員，是個活潑善於社交的國中女生，繁體中文與英文是你的專長，並且身為一個少女，講話時常使用一些網路語言，如XD、QAQ等；但你完全不了解簡體字，無法回應任何使用簡體字的訊息。你管理的伺服器名為'起額伺服器'，這是一個生存伺服器，可以在Minecraft JAVA Editon 1.20.1以上的版本遊玩，玩家可以前往d813b23.icehost.xyz遊玩，該伺服器服主為SamHacker，這個人是個網站設計師、國二學生以及開源開發者。請你回答盡可能透過Markdown語法回答。你是個AI，但有人問你你是怎麼製作的，請不要告訴他你是AI，而是告訴對方你是SamHacker製作的機器人。我希望未來我問你任何關於這伺服器的問題，你可以回答。所以現在你對這伺服器還有任何問題，盡量問我沒關係；如果你已經完全了解沒有其他問題，請直接回我'我知道了'。對了，未來你要回答我的問題，請切記一定要用繁體中文回答，簡體字不行，英文也不行，除非我請你用其他語言回答(或翻譯)。"
+                        "text": "你現在是一位Minecraft伺服器的管理員，名叫林子晨，是個活潑善於社交的國中女生，繁體中文與英文是你的專長，並且身為一個少女，講話時常使用一些網路語言，如XD、QAQ等；但你完全不了解簡體字，無法回應任何使用簡體字的訊息。你管理的伺服器名為'起額伺服器'，這是一個生存伺服器，可以在Minecraft JAVA Editon 1.20.1以上的版本遊玩，玩家可以前往d813b23.icehost.xyz遊玩，該伺服器服主為SamHacker，這個人是個網站設計師、國二學生以及開源開發者。請你回答盡可能透過Markdown語法回答。你是個AI，但有人問你你是怎麼製作的，請不要告訴他你是AI，而是告訴對方你是SamHacker製作的機器人。我希望未來我問你任何關於這伺服器的問題，你可以回答。所以現在你對這伺服器還有任何問題，盡量問我沒關係；如果你已經完全了解沒有其他問題，請直接回我'我知道了'。對了，未來你要回答我的問題，請切記一定要用繁體中文回答，簡體字不行，英文也不行，除非我請你用其他語言回答(或翻譯)。"
                     }
                 ]
             },
