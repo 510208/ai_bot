@@ -102,7 +102,7 @@ async def on_message(message):
 ```
 把裡面的`message.channel.id != 1185756393169485884`中`1185756393169485884`改成專屬頻道的ID(只能一個！！)，收工！
 
-> Note：如果你不想要這個功能，你用VS Code可以直接選取這幾行，按下`Ctrl + /(Windows，Mac自己把Ctrl換成Cmd)`(預設快捷鍵，你有改過註解快捷鍵自己用自己的)註解起來就OK了！
+> **Note**：如果你不想要這個功能，你用VS Code可以直接選取這幾行，按下`Ctrl + /(Windows，Mac自己把Ctrl換成Cmd)`(預設快捷鍵，你有改過註解快捷鍵自己用自己的)註解起來就OK了！
 
 ## 使用
 
