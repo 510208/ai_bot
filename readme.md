@@ -19,14 +19,14 @@ $ git clone https://github.com/510208/ai_bot.git
 2. 安裝Python 3.11 (推薦3.11版本，以防止Bug)
 3. 安裝依賴項：`pip install -r requirements.txt`
 4. 設定您的機器人 Token 在 `config.json`
-5. 設定 Gemini API Key，詳細設定方法如下(`config.json`請自行建立：
+5. 設定 Gemini API Key，詳細設定方法如下(`config.json`)請自行建立：
 ```json
 {
     "gemini_api_key": "Gemini 的API金鑰",
     "discord_api_key": "Discord 機器人的Token"
 }
 ```
-5. 運行 `main.py`
+6. 運行 `main.py`
 
 ## 使用
 
