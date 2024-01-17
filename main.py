@@ -91,6 +91,7 @@ async def on_message(message):
         async with message.channel.typing():
             if message.channel.id != 1185756393169485884:
                 return
+            
             logging.info(f'\n提示詞：{prompt_text}\n請求提出者；{message.author}\n請求頻道：{message.channel}\n請求伺服器：{message.guild}\n類型：純文字')
             prompt_text = prompt_text.lstrip()
 
