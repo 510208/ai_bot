@@ -41,6 +41,11 @@ async def on_disconnect():
     await channel.send('<:__:1185578246276919316> 我下線囉！\n現在沒空聊天QAQ，待會見~~')
 
 @client.event
+async def on_resumed():
+    channel = client.get_channel(1185756393169485884)
+    await channel.send('<:__:1185578246276919316> 我回來囉！\n要找我聊天記得@我喔~~')
+
+@client.event
 async def on_message(message):
     global last_message_time
     # 發送上路訊息

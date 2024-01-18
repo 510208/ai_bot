@@ -30,79 +30,7 @@ $ git clone https://github.com/510208/ai_bot.git
 
 ## 基本設定
 
-我沒有寫夠多的`config.json`功能，請自己進到原始檔案裏面改，以下是你要改的內容：
-
-### 機器人管理員
-
-取得自己Discord帳號ID，他應該長這樣：`959977374471028779`(這是作者SamHacker的ID)
-打開根目錄下的`main.py`，他應該有幾段長這樣：
-```python
-@client.event
-async def on_message(message):
-    # ...
-    # 重設歷史對話
-    if message.content == '!reset':
-        if message.author.id == 959977374471028779:
-            aibot.reset_history()
-            await message.reply('歷史對話已重設！')
-            return
-        else:
-            await message.reply('你沒有權限重設歷史對話！這只有作者 <@959977374471028779> 辦的到')
-            return
-    
-    if message.content.startswith('!change'):
-        if message.author.id == 959977374471028779:
-            game = message.content.split(' ')[1]
-            await client.change_presence(activity=discord.Game(name=game))
-            await message.reply('遊戲已變更為「{}」！'.format(game))
-        else:
-            await message.reply('你沒有權限重設歷史對話！這只有作者 <@959977374471028779> 辦的到')
-            return
-    
-    # ...
-```
-
-把裡面的`959977374471028779`全部取代成自己的ID，完美，已經改好了！
-
-### 發送啟動、關閉訊息的頻道
-
-一樣是`main.py`，找到這幾行：
-```python
-@client.event
-async def on_ready():
-    logging.warning(f'We have logged in as {client.user}')
-    channel = client.get_channel(1185756393169485884)
-    await channel.send("<:__:1185578246276919316> 我上線囉！\n要找我聊天記得@我喔~~")
-
-@client.event
-async def on_disconnect():
-    channel = client.get_channel(1185756393169485884)
-    await channel.send('<:__:1185578246276919316> 我下線囉！\n現在沒空聊天QAQ，待會見~~')
-```
-
-裡面的`channel = client.get_channel(1185756393169485884)`裡`1185756393169485884`通通換成自己要用來發送訊息的頻道ID。
-上面的`on_ready`裡面是上線訊息，把`<:__:1185578246276919316> 我上線囉！\n要找我聊天記得@我喔~~`換成自己要的上線訊息，`<:__:1185578246276919316>`這段請自己換成自己要的Emoji，不想或沒有Emoji可以把這段移除；底下`on_disconnect`裡面是下線訊息，把`<:__:1185578246276919316> 我下線囉！\n現在沒空聊天QAQ，待會見~~`換成自己要的下線訊息，`<:__:1185578246276919316>`這段請自己換成自己要的Emoji，不想或沒有Emoji可以把這段移除。
-
-### 專用頻道
-
-需要設定一個專屬頻道，讓機器人可以只在這個頻道出現？請如此設定：
-一樣，在`main.py`挖出這幾行：
-```python
-@client.event
-async def on_message(message):
-    # ...
-    # 檢查是否有提及機器人
-    if client.user.mentioned_in(message):
-        # ...
-        async with message.channel.typing():
-            if message.channel.id != 1185756393169485884:
-                return
-        
-        #...
-```
-把裡面的`message.channel.id != 1185756393169485884`中`1185756393169485884`改成專屬頻道的ID(只能一個！！)，收工！
-
-> **Note**：如果你不想要這個功能，你用VS Code可以直接選取這幾行，按下`Ctrl + /(Windows，Mac自己把Ctrl換成Cmd)`(預設快捷鍵，你有改過註解快捷鍵自己用自己的)註解起來就OK了！
+我沒有寫夠多的`config.json`功能，請自己進到原始檔案裏面改，請前往 [初始化教學](docs/initialization.md)
 
 ## 使用
 
@@ -129,7 +57,7 @@ def reset_history():
 
 ## 機器人指令清單
 
-請檢閱此說明文件以查詢指令清單： [指令清單文件](command.md)
+請檢閱此說明文件以查詢指令清單： [指令清單文件](docs/command.md)
 
 ## 貢獻
 
