@@ -27,7 +27,7 @@ with open('config.json', 'r') as f:
 intents = discord.Intents.default()
 intents.message_content = True
 
-client = discord.Client(intents=intents)
+client = discord.Client(intents=intents, allowed_mentions=discord.AllowedMentions(everyone=False, users=False, roles=False,replied_user=False))
 
 @client.event
 async def on_ready():
