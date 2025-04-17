@@ -23,6 +23,10 @@ with open('config.json', 'r') as f:
     config = json.load(f)
     bot_token = config['discord_api_key']
 
+if config['gemini_api_key'] == '' or config['gemini_api_key'] == 'Gemini 的API金鑰' or config['discord_api_key'] == '' or config['discord_api_key'] == 'Gemini 的API金鑰':
+    logging.warning("[API 金鑰警告] 您似乎尚未設定API金鑰，請於config.json中指定")
+
+
 # 初始化Pycord
 intents = discord.Intents.default()
 intents.message_content = True
